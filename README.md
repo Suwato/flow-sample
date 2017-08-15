@@ -63,7 +63,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.LoadBigQuery \
 
 1. CloudFunctions APIの有効化
 
-https://console.cloud.google.com/apis/api/cloudfunctions.googleapis.com/overview?project=[your Project id]
+https://console.cloud.google.com/apis/api/cloudfunctions.googleapis.com/overview?project=[your Project id]
 
 2. config.jsonの編集
 
