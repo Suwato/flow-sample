@@ -9,6 +9,9 @@
 
 [CloudFunctions 参考ページ](https://cloud.google.com/functions/?hl=ja)
 
+![概要図](GCS-CF-DF.png)
+
+
 * 以下のケースにて利用が考えられます。
   * データ量が爆発的に増加して、ローカルPC 1台では定期バッチが指定時間以内に終わらない
   * PCでの処理を出来る限り、ソースコードベースにして汎用化したい
