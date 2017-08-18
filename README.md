@@ -1,23 +1,26 @@
 # DEMO
 
 ## 概要
-* GCSへのファイル格納をトリガーに、DataFlowでの簡単なデータクレンジング、BigQueryへのロードを行います。
-
-* 格納検知、DataFlow起動は、CloudFunctionsを利用しています。
+* GCSへのファイル格納をトリガーに、DataFlowでの簡単なデータクレンジング、BigQueryへのロードを行います。
 
-[DataFlow 参考ページ](https://cloud.google.com/dataflow/?hl=ja)
+* 格納検知、DataFlow起動は、CloudFunctionsを利用しています。
+
+[DataFlow 参考ページ](https://cloud.google.com/dataflow/?hl=ja)
 
 [CloudFunctions 参考ページ](https://cloud.google.com/functions/?hl=ja)
 
+![概要図](GCS-CF-DF.png)
+
+
 * 以下のケースにて利用が考えられます。
-  * データ量が爆発的に増加して、ローカルPC 1台では定期バッチが指定時間以内に終わらない
-  * PCでの処理を出来る限り、ソースコードベースにして汎用化したい
+  * データ量が爆発的に増加して、ローカルPC 1台では定期バッチが指定時間以内に終わらない
+  * PCでの処理を出来る限り、ソースコードベースにして汎用化したい
 
-* 今回のsampleでは、INTEGER型のColumnに、それ以外の型が混入した場合（`aaa`など）、`0`を代入する処理になっています。
+* 今回のsampleでは、INTEGER型のColumnに、それ以外の型が混入した場合（`aaa`など）、`0`を代入する処理になっています。
 
-## DataFlow
+## DataFlow
 
-1. DataFlowAPIの有効化
+1. DataFlowAPIの有効化
 
 https://console.cloud.google.com/apis/api/dataflow.googleapis.com/overview?project= [your Project id]
 
@@ -37,7 +40,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.LoadBigQuery \
 --dataflowJobFile=<< template file >>"
 ```
 
-* 指定するバケットは、先に作成されている必要があります
+* 指定するバケットは、先に作成されている必要があります
 
 * stagingLocation 
   * dataflow実行ファイル(jar)の格納する場所の指定してください
@@ -51,7 +54,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.LoadBigQuery \
 * bigQueryDataset
   * 出力先のDatasetを指定してください
   * 例 `test`
-    * 出力先のデータセットは先に作成されている必要があります
+    * 出力先のデータセットは先に作成されている必要があります
     * テーブルに関しては作成不要です
 
 * dataflowJobFile
@@ -63,14 +66,14 @@ mvn compile exec:java -Dexec.mainClass=com.example.LoadBigQuery \
 
 1. CloudFunctions APIの有効化
 
-https://console.cloud.google.com/apis/api/cloudfunctions.googleapis.com/overview?project=[your Project id]
+https://console.cloud.google.com/apis/api/cloudfunctions.googleapis.com/overview?project=[your Project id]
 
 2. config.jsonの編集
 
 * PROJECT_ID
-  *  ProjectIDを記入して下さい
+  *  ProjectIDを記入して下さい
 * DATAFLOW_TEMPLATE_PATH 
-  *  dataflowJobFileで指定したPATHを記入してください
+  *  dataflowJobFileで指定したPATHを記入してください
   *  例 `gs://example/templates/LoadBigQuery`
 
 2. CloudFunctionsのデプロイ
@@ -85,7 +88,7 @@ npm install && npm run build
 gcloud beta functions deploy dataflowJob --stage-bucket << stage bucket >> --trigger-bucket << trigger bucket >>
 ```
 * stage-bucket
-  * dataflowの実行ファイル(.js)が格納される場所を指定してください
+  * dataflowの実行ファイル(.js)が格納される場所を指定してください
   * 例 `gs://example`
 
 * trigger-bucket
